@@ -21,6 +21,11 @@
 		D8615C3318D314870058EEF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8615C1518D314870058EEF8 /* UIKit.framework */; };
 		D8615C3B18D314870058EEF8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8615C3918D314870058EEF8 /* InfoPlist.strings */; };
 		D8615C3D18D314870058EEF8 /* InteractiveTransitionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C3C18D314870058EEF8 /* InteractiveTransitionTests.m */; };
+		D8615C4A18D317C60058EEF8 /* EPPZGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C4918D317C60058EEF8 /* EPPZGeometry.m */; };
+		D8615C4D18D317DF0058EEF8 /* EPPZRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C4C18D317DF0058EEF8 /* EPPZRandom.m */; };
+		D8615C5318D3214C0058EEF8 /* EPPZInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C5218D3214C0058EEF8 /* EPPZInteractor.m */; };
+		D8615C5618D32FA00058EEF8 /* EPPZModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */; };
+		D8615C5818D32FC50058EEF8 /* EPPZModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,15 @@
 		D8615C3818D314870058EEF8 /* InteractiveTransitionTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InteractiveTransitionTests-Info.plist"; sourceTree = "<group>"; };
 		D8615C3A18D314870058EEF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D8615C3C18D314870058EEF8 /* InteractiveTransitionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InteractiveTransitionTests.m; sourceTree = "<group>"; };
+		D8615C4818D317C60058EEF8 /* EPPZGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZGeometry.h; sourceTree = "<group>"; };
+		D8615C4918D317C60058EEF8 /* EPPZGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZGeometry.m; sourceTree = "<group>"; };
+		D8615C4B18D317DF0058EEF8 /* EPPZRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZRandom.h; sourceTree = "<group>"; };
+		D8615C4C18D317DF0058EEF8 /* EPPZRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZRandom.m; sourceTree = "<group>"; };
+		D8615C5118D3214C0058EEF8 /* EPPZInteractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZInteractor.h; sourceTree = "<group>"; };
+		D8615C5218D3214C0058EEF8 /* EPPZInteractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZInteractor.m; sourceTree = "<group>"; };
+		D8615C5418D32FA00058EEF8 /* EPPZModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZModalViewController.h; sourceTree = "<group>"; };
+		D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZModalViewController.m; sourceTree = "<group>"; };
+		D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EPPZModalViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +126,17 @@
 		D8615C1718D314870058EEF8 /* InteractiveTransition */ = {
 			isa = PBXGroup;
 			children = (
+				D8615C4E18D317E20058EEF8 /* eppz!kit (local) */,
 				D8615C2018D314870058EEF8 /* EPPZAppDelegate.h */,
 				D8615C2118D314870058EEF8 /* EPPZAppDelegate.m */,
 				D8615C2318D314870058EEF8 /* Main.storyboard */,
 				D8615C2618D314870058EEF8 /* EPPZViewController.h */,
 				D8615C2718D314870058EEF8 /* EPPZViewController.m */,
+				D8615C5118D3214C0058EEF8 /* EPPZInteractor.h */,
+				D8615C5218D3214C0058EEF8 /* EPPZInteractor.m */,
+				D8615C5418D32FA00058EEF8 /* EPPZModalViewController.h */,
+				D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */,
+				D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */,
 				D8615C2918D314870058EEF8 /* Images.xcassets */,
 				D8615C1818D314870058EEF8 /* Supporting Files */,
 			);
@@ -150,6 +170,33 @@
 				D8615C3918D314870058EEF8 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D8615C4E18D317E20058EEF8 /* eppz!kit (local) */ = {
+			isa = PBXGroup;
+			children = (
+				D8615C4F18D317EB0058EEF8 /* Random */,
+				D8615C5018D317F00058EEF8 /* Geometry */,
+			);
+			name = "eppz!kit (local)";
+			sourceTree = "<group>";
+		};
+		D8615C4F18D317EB0058EEF8 /* Random */ = {
+			isa = PBXGroup;
+			children = (
+				D8615C4B18D317DF0058EEF8 /* EPPZRandom.h */,
+				D8615C4C18D317DF0058EEF8 /* EPPZRandom.m */,
+			);
+			name = Random;
+			sourceTree = "<group>";
+		};
+		D8615C5018D317F00058EEF8 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				D8615C4818D317C60058EEF8 /* EPPZGeometry.h */,
+				D8615C4918D317C60058EEF8 /* EPPZGeometry.m */,
+			);
+			name = Geometry;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +279,7 @@
 				D8615C2A18D314870058EEF8 /* Images.xcassets in Resources */,
 				D8615C1C18D314870058EEF8 /* InfoPlist.strings in Resources */,
 				D8615C2518D314870058EEF8 /* Main.storyboard in Resources */,
+				D8615C5818D32FC50058EEF8 /* EPPZModalViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,9 +298,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8615C4A18D317C60058EEF8 /* EPPZGeometry.m in Sources */,
 				D8615C1E18D314870058EEF8 /* main.m in Sources */,
+				D8615C5618D32FA00058EEF8 /* EPPZModalViewController.m in Sources */,
 				D8615C2218D314870058EEF8 /* EPPZAppDelegate.m in Sources */,
+				D8615C4D18D317DF0058EEF8 /* EPPZRandom.m in Sources */,
 				D8615C2818D314870058EEF8 /* EPPZViewController.m in Sources */,
+				D8615C5318D3214C0058EEF8 /* EPPZInteractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

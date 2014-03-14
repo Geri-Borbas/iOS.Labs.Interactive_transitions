@@ -1,15 +1,17 @@
 //
-//  EPPZViewController.h
+//  EPPZModalViewController.m
 //  InteractiveTransition
 //
 //  Created by Carnation on 14/03/14.
 //  Copyright (c) 2014 eppz! development, LLC. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "EPPZGeometry.h"
+#import "EPPZModalViewController.h"
 
 
-@interface EPPZViewController : UIViewController
+@interface EPPZModalViewController ()
+@end
 
+
+@implementation EPPZModalViewController
 @end

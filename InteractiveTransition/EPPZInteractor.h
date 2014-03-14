@@ -1,5 +1,5 @@
 //
-//  EPPZViewController.h
+//  EPPZInteractor.h
 //  InteractiveTransition
 //
 //  Created by Carnation on 14/03/14.
@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EPPZGeometry.h"
 
 
-@interface EPPZViewController : UIViewController
+@interface EPPZInteractor : UIPercentDrivenInteractiveTransition
+
+
 
 @end
