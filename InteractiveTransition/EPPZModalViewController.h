@@ -10,4 +10,7 @@
 
 
 @interface EPPZModalViewController : UIViewController
+
+-(IBAction)dismissTouchedUp;
+
 @end

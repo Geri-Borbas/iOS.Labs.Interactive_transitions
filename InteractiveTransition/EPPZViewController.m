@@ -10,6 +10,17 @@
 #import "EPPZModalViewController.h"
 
 
+#define EPPZTransitionLogging YES
+#define ETRLog if (EPPZTransitionLogging) NSLog
+
+
+typedef enum
+{
+    In,     // 0
+    Out     // 1
+} EPPZTransitionState;
+
+
 @interface EPPZViewController ()
 
     <
@@ -37,9 +48,21 @@
 
     >
 
-@property (nonatomic) BOOL interactive;
-@property (nonatomic) BOOL presenting;
-@property (nonatomic, strong) id <UIViewControllerContextTransitioning> transitionContext;
+@property (nonatomic, getter=isInteractive) BOOL interactive;
+@property (nonatomic) EPPZTransitionState targetState;
+@property (nonatomic) BOOL canceled;
+
+@property (nonatomic, weak) id <UIViewControllerContextTransitioning> transitionContext;
+@property (nonatomic, weak) UIView *presenterView;
+@property (nonatomic, weak) UIView *modalView;
+@property (nonatomic, weak) UIView *containerView;
+ 
+@property (nonatomic, strong) EPPZViewControllerModalInstanceBlock modalInstance;
+@property (nonatomic, strong) NSDictionary *viewNamesForViewTags;
+
+@property (nonatomic) CGFloat duration;
+@property (nonatomic) CGFloat damping;
+@property (nonatomic) CGFloat initialSpringVelocity;
 
 @end
 
@@ -47,10 +70,63 @@
 @implementation EPPZViewController
 
 
+-(IBAction)presentTouchedUp
+{
+    [self presentViewController:self.modalInstance()
+                       animated:YES
+                     completion:nil];
+}
+
+
+#pragma mark - Creation
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.viewNamesForViewTags = @{
+                                  @(0) : @"None",
+                                  @(1) : @"Presenter",
+                                  @(2) : @"Modal",
+                                  };
+    
+    [self setup];
+    
+    // Define modal instance.
+    __block EPPZViewController *transition = self;
+    self.modalInstance = ^()
+    {
+        ETRLog(@"modalInstance");
+        
+        EPPZModalViewController *modalViewController = [[EPPZModalViewController alloc] initWithNibName:@"EPPZModalViewController" bundle:nil];
+        modalViewController.modalPresentationStyle = UIModalPresentationCustom;
+        modalViewController.transitioningDelegate = transition;
+        return modalViewController;
+    };
+    
     [self addGestureRecognizer];
+}
+
+
+#pragma mark - Debug
+
+-(void)setPresenterView:(UIView*) presenterView
+{
+    _presenterView = presenterView;
+    self.presenterViewLabel.text = self.viewNamesForViewTags[@(presenterView.tag)];
+}
+
+-(void)setModalView:(UIView*) modalView
+{
+    _modalView = modalView;
+    self.modalViewLabel.text = self.viewNamesForViewTags[@(modalView.tag)];
+}
+
+-(void)showPercent:(CGFloat) percent
+{
+    // UI.
+    self.positiveProgressView.progress = (percent > 0.0) ? percent : 0.0;
+    self.negativeProgressView.progress = (percent < 0.0) ? 1.0 + percent : 1.0;
 }
 
 
@@ -66,57 +142,62 @@
     [self.view addGestureRecognizer:panGestureRecognizer];
 }
 
-
 -(void)handlePan:(UIPanGestureRecognizer*) panGesture
 {
     // Get translation.
     CGPoint location = [panGesture locationInView:panGesture.view];
-    CGPoint velocityVectorPoint = [panGesture velocityInView:panGesture.view];
-    // CGFloat verticalVelocity = velocityVectorPoint.y;
+    // CGPoint velocityVectorPoint = [panGesture velocityInView:panGesture.view];
+    // CGFloat horizontalVelocity = velocityVectorPoint.x;
     static CGPoint touchPoint;
     
     // Calculate percentage.
-    CGFloat percent;
+    CGFloat deltaPercent = 0.0;
     if (CGPointEqualToPoint(touchPoint, CGPointZero) == NO)
-    { percent = (touchPoint.y - location.y) / panGesture.view.bounds.size.height; }
+    { deltaPercent = (location.x - touchPoint.x) / panGesture.view.bounds.size.width; }
     
+    // Gesture dispatch.
     switch (panGesture.state)
     {
         case UIGestureRecognizerStateBegan :
         {
             touchPoint = location;
-            self.interactive = YES;
-            
-            // Present.
-            if (location.x < CGRectGetMidX(panGesture.view.bounds))
-            {
-                self.presenting = YES;
-                
-                EPPZModalViewController *modalViewController = [[EPPZModalViewController alloc] initWithNibName:@"EPPZModalViewController" bundle:nil];
-                modalViewController.modalPresentationStyle = UIModalPresentationCustom;
-                modalViewController.transitioningDelegate = self;
-            
-                [self presentViewController:modalViewController
-                                   animated:YES
-                                 completion:nil];
-            }
-            
-            // Dismiss.
-            else
-            {
-                [self.parentViewController dismissViewControllerAnimated:YES
-                                                              completion:nil];
-            }
-            
-            
-            
             break;
         }
             
         case UIGestureRecognizerStateChanged :
         {
-            [self updateInteractiveTransition:percent];
-            // NSLog(@"%.2f%% %.2f", percent * 100, verticalVelocity);
+            // Start if not already.
+            if ([self isInteractive] == NO)
+            {
+                self.interactive = YES;
+                
+                // Present.
+                BOOL presenting = (deltaPercent > 0.0);
+                if (presenting)
+                {
+                    // Sets `present` to YES internally.
+                    [self presentViewController:self.modalInstance()
+                                       animated:YES
+                                     completion:nil];
+                }
+                
+                // Dismiss.
+                else
+                {
+                    // Sets `present` to NO internally.
+                    [self dismissViewControllerAnimated:YES
+                                             completion:nil];
+                }
+            }
+            
+            
+            // Hook.
+            CGFloat transitionPercent = (self.targetState == In) ? deltaPercent : 1.0 + deltaPercent;
+            [self updateInteractiveTransition:transitionPercent];
+            
+            // UI.
+            self.percentProgressView.progress = deltaPercent;
+            [self showPercent:deltaPercent];
             
             break;
         }
@@ -124,32 +205,19 @@
         case UIGestureRecognizerStateEnded :
         case UIGestureRecognizerStateCancelled :
         {
-            // Inspect for cancellation.
-            BOOL cancelled = ( /* verticalVelocity < 5.0 && */ fabsf(percent) <= 0.3);
+            // Only if an interactive transition started.
+            if ([self isInteractive] == NO) return;
             
-            // Depending on our state and the velocity, determine whether to cancel or complete the transition.
-            /*
-            if (self.presenting)
-            {
-                if (velocity.x > 0)
-                { [self finishInteractiveTransition]; }
-                else
-                { [self cancelInteractiveTransition]; }
-            }
-            else
-            {
-                if (velocity.x < 0) {
-                    [self finishInteractiveTransition];
-                }
-                else {
-                    [self cancelInteractiveTransition];
-                }
-            }
-            */
-             
-            // Finish or cancel transition.
-            if (cancelled) NSLog(@"Cancel"); // [self cancelInteractiveTransition];
-            else NSLog(@"Finish"); // [self finishInteractiveTransition];
+            // Inspect for cancellation.
+            BOOL isFast = NO; // verticalVelocity < 5.0;
+            self.canceled = (isFast == NO && fabsf(deltaPercent) <= 0.3);
+            self.interactive = NO;
+            
+            // Swap back target state if interaction canceled.
+            if (self.canceled)
+            { self.targetState = (self.targetState == In) ? Out : In; }
+            
+            [self animateCompletion];
             
             break;
         }
@@ -164,18 +232,96 @@
 }
 
 
-#pragma mark - Animated transitioning delegate (is self)
+#pragma mark - Setup templates (override is optional)
+
+-(void)setup
+{
+    ETRLog(@"EPPZTransition setup");
+    
+    self.duration = 2.0;
+    self.damping = 0.68;
+    self.initialSpringVelocity = 0.48;
+}
+
+-(void)setupPresentation
+{
+    ETRLog(@"EPPZTransition setupPresentation");
+    
+    // Add.
+    [self.containerView addSubview:self.presenterView];
+    [self.containerView insertSubview:self.modalView aboveSubview:self.presenterView];
+    
+    // Layout start.
+    [self layoutStart];
+}
+
+-(void)setupDismissal
+{
+    ETRLog(@"EPPZTransition setupDismissal");
+    
+    // Views are probably already added.
+    
+    // Layout end.
+    [self layoutEnd];
+}
+
+
+#pragma mark - Layout templates (override is required)
+
+-(void)layoutStart
+{
+    ETRLog(@"EPPZTransition layoutStart");
+    
+    // Presenting view (as is).
+    self.presenterView.transform = CGAffineTransformIdentity;
+    
+    // Modal view (left out).
+    self.modalView.transform = CGAffineTransformMakeTranslation(-self.modalView.bounds.size.width, 0.0);
+}
+
+-(void)layoutEnd
+{
+    ETRLog(@"EPPZTransition layoutEnd");
+    
+    // Presenting view (as is).
+    self.presenterView.transform = CGAffineTransformIdentity;
+    
+    // Modal view (in).
+    self.modalView.transform = CGAffineTransformMakeTranslation(0.0, 0.0);
+}
+
+-(void)layoutInteractive:(CGFloat) percent
+{
+    ETRLog(@"EPPZTransition layoutInteractive: (%.2f) containerView:presentingView:modalView:", percent);
+    
+    // Modal view (0.0 is left out, 1.0 is in).
+    self.modalView.transform = CGAffineTransformMakeTranslation(-self.modalView.bounds.size.width * (1.0 - percent), 0.0);
+}
+
+
+
+#pragma mark - UIViewControllerTransitioningDelegate
 
 -(id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController*) presented
                                                                  presentingController:(UIViewController*) presenting
                                                                      sourceController:(UIViewController*) source
-{ return self; }
+{
+    ETRLog(@"UIViewControllerTransitioningDelegate animationControllerForPresentedController:presentingController:sourceController:");
+    
+    self.targetState = In;
+    return self;
+}
 
 -(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController*) dismissed
-{ return self; }
+{
+    ETRLog(@"UIViewControllerTransitioningDelegate animationControllerForDismissedController:");
+    
+    self.targetState = Out;
+    return self;
+}
 
 
-#pragma mark - Interactor (is self)
+#pragma mark - UIViewControllerTransitioningDelegate (interactive)
 
 -(id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>) animator
 { return (self.interactive) ? self : nil; }
@@ -184,150 +330,121 @@
 { return (self.interactive) ? self : nil; }
 
 
-#pragma mark - Animation (non interactive)
+#pragma mark - UIViewControllerAnimatedTransitioning
 
 -(NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>) transitionContext
-{ return 2.0; }
+{
+    ETRLog(@"UIViewControllerAnimatedTransitioning transitionDuration: (%.1f)", self.duration);
+    return self.duration;
+}
 
 -(void)animateTransition:(id<UIViewControllerContextTransitioning>) transitionContext
 {
-    // Do nothing when interactive.
-    if (self.interactive) return;
+    ETRLog(@"UIViewControllerAnimatedTransitioning animateTransition:");
+
+    // Aliases.
+    UIView *fromView = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey].view;
+    UIView *toView = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey].view;
+    UIView *containerView = [transitionContext containerView];
     
-    // This code is lifted wholesale from the TLTransitionAnimator class.
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    
-    CGRect endFrame = [[transitionContext containerView] bounds];
-    if (self.presenting)
+    // References.
+    self.transitionContext = transitionContext;
+    self.presenterView = (self.targetState == In) ? fromView : toView;
+    self.modalView = (self.targetState == In) ? toView : fromView;
+    self.containerView = containerView;
+
+    // Animations.
+    [self animateCompletion];
+}
+
+-(void)animateCompletion
+{
+    // Presenting.
+    if (self.targetState == In)
     {
-        [transitionContext.containerView addSubview:fromViewController.view];
-        [transitionContext.containerView addSubview:toViewController.view];
+        ETRLog(@"Presenting");
         
-        CGRect startFrame = endFrame;
-        startFrame.origin.x -= CGRectGetWidth([[transitionContext containerView] bounds]);
-        toViewController.view.frame = startFrame;
-        
-        [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^
-        { toViewController.view.frame = endFrame; }
-                         completion:^(BOOL finished)
-        { [transitionContext completeTransition:YES]; }];
+        [self setupPresentation];
+        [self animateEnd];
     }
     
+    // Dismissal.
     else
     {
-        [transitionContext.containerView addSubview:toViewController.view];
-        [transitionContext.containerView addSubview:fromViewController.view];
+        ETRLog(@"Dismissal");
         
-        endFrame.origin.x -= CGRectGetWidth([[transitionContext containerView] bounds]);
-        
-        [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^
-        { fromViewController.view.frame = endFrame; }
-                         completion:^(BOOL finished)
-        { [transitionContext completeTransition:YES]; }];
+        [self setupDismissal];
+        [self animateStart];
     }
 }
 
-#pragma mark - Animation (interactive)
+-(void)animateEnd
+{
+    [UIView animateWithDuration:self.duration
+                          delay:0.0
+         usingSpringWithDamping:self.damping
+          initialSpringVelocity:self.initialSpringVelocity
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{ [self layoutEnd]; }
+                     completion:^(BOOL finished)
+     {
+         [self reset];
+         [self.transitionContext completeTransition:!self.canceled];
+     }];
+}
+
+-(void)animateStart
+{
+    [UIView animateWithDuration:self.duration
+                          delay:0.0
+         usingSpringWithDamping:self.damping
+          initialSpringVelocity:self.initialSpringVelocity
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{ [self layoutStart]; }
+                     completion:^(BOOL finished)
+     {
+         [self reset];
+         [self.transitionContext completeTransition:!self.canceled];
+     }];
+}
+
+-(void)reset
+{
+    // Reset.
+    self.presenterView = nil;
+    self.modalView = nil;
+    
+    self.targetState = Out;
+    self.interactive = NO;
+}
+
+
+#pragma mark - UIViewControllerInteractiveTransitioning
 
 -(void)startInteractiveTransition:(id<UIViewControllerContextTransitioning>) transitionContext
 {
+    ETRLog(@"UIViewControllerInteractiveTransitioning startInteractiveTransition:");
+    
+    // Aliases.
+    UIView *fromView = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey].view;
+    UIView *toView = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey].view;
+    UIView *containerView = [transitionContext containerView];
+    
+    // References.
     self.transitionContext = transitionContext;
+    self.presenterView = (self.targetState == In) ? fromView : toView;
+    self.modalView = (self.targetState == In) ? toView : fromView;
+    self.containerView = containerView;
     
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    
-    CGRect frame = [[transitionContext containerView] bounds];
-    
-    if (self.presenting)
-    {
-        [transitionContext.containerView addSubview:fromViewController.view];
-        [transitionContext.containerView addSubview:toViewController.view];
-        
-        frame.origin.x -= CGRectGetWidth([[transitionContext containerView] bounds]);
-    }
+    // Setup.
+    if (self.targetState == In)
+    { [self setupPresentation]; }
     else
-    {
-        [transitionContext.containerView addSubview:toViewController.view];
-        [transitionContext.containerView addSubview:fromViewController.view];
-    }
-    
-    toViewController.view.frame = frame;
+    { [self setupDismissal]; }
 }
 
--(void)updateInteractiveTransition:(CGFloat)percentComplete
-{
-    id <UIViewControllerContextTransitioning> transitionContext = self.transitionContext;
-    
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    
-    // Presenting goes from 0...1 and dismissing goes from 1...0
-    CGRect frame = CGRectOffset([[transitionContext containerView] bounds], -CGRectGetWidth([[transitionContext containerView] bounds]) * (1.0f - percentComplete), 0);
-    
-    if (self.presenting)
-    {
-        toViewController.view.frame = frame;
-    }
-    else {
-        fromViewController.view.frame = frame;
-    }
-}
-
--(void)finishInteractiveTransition
-{
-    id<UIViewControllerContextTransitioning> transitionContext = self.transitionContext;
-    
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    
-    if (self.presenting)
-    {
-        CGRect endFrame = [[transitionContext containerView] bounds];
-        
-        [UIView animateWithDuration:0.5f animations:^{
-            toViewController.view.frame = endFrame;
-        } completion:^(BOOL finished) {
-            [transitionContext completeTransition:YES];
-        }];
-    }
-    else {
-        CGRect endFrame = CGRectOffset([[transitionContext containerView] bounds], -CGRectGetWidth([[self.transitionContext containerView] bounds]), 0);
-        
-        [UIView animateWithDuration:0.5f animations:^{
-            fromViewController.view.frame = endFrame;
-        } completion:^(BOOL finished) {
-            [transitionContext completeTransition:YES];
-        }];
-    }
-}
-
--(void)cancelInteractiveTransition
-{
-    id<UIViewControllerContextTransitioning> transitionContext = self.transitionContext;
-    
-    UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    
-    if (self.presenting)
-    {
-        CGRect endFrame = CGRectOffset([[transitionContext containerView] bounds], -CGRectGetWidth([[transitionContext containerView] bounds]), 0);
-        
-        [UIView animateWithDuration:0.5f animations:^
-        { toViewController.view.frame = endFrame; }
-                         completion:^(BOOL finished)
-        { [transitionContext completeTransition:NO]; }];
-    }
-    else
-    {
-        CGRect endFrame = [[transitionContext containerView] bounds];
-        
-        [UIView animateWithDuration:0.5f animations:^
-        { fromViewController.view.frame = endFrame; }
-                         completion:^(BOOL finished)
-        { [transitionContext completeTransition:NO]; }];
-    }
-}
+-(void)updateInteractiveTransition:(CGFloat) percentComplete
+{ [self layoutInteractive:percentComplete]; }
 
 
 @end
