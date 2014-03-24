@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "EPPZGeometry.h"
-
-
-typedef UIViewController *(^EPPZViewControllerModalInstanceBlock)();
+#import "EPPZTransition.h"
 
 
 @interface EPPZViewController : UIViewController

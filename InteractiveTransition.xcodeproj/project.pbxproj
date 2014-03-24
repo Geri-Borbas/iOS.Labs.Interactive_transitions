@@ -26,6 +26,8 @@
 /* Begin PBXFileReference section */
 		D848E4EB18E0975800D5BEA8 /* EPPZTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZTransition.h; sourceTree = "<group>"; };
 		D848E4EC18E0975800D5BEA8 /* EPPZTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZTransition.m; sourceTree = "<group>"; };
+		D848E4EF18E0988300D5BEA8 /* EPPZTransition.protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZTransition.protected.h; sourceTree = "<group>"; };
+		D848E4F018E09C8400D5BEA8 /* EPPZTransition.debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPPZTransition.debug.h; sourceTree = "<group>"; };
 		D8615C0E18D314870058EEF8 /* InteractiveTransition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteractiveTransition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8615C1118D314870058EEF8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D8615C1318D314870058EEF8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -100,6 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				D848E4EB18E0975800D5BEA8 /* EPPZTransition.h */,
+				D848E4EF18E0988300D5BEA8 /* EPPZTransition.protected.h */,
+				D848E4F018E09C8400D5BEA8 /* EPPZTransition.debug.h */,
 				D848E4EC18E0975800D5BEA8 /* EPPZTransition.m */,
 			);
 			name = Transition;
