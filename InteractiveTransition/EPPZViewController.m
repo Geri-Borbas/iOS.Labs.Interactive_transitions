@@ -190,7 +190,6 @@ typedef enum
                 }
             }
             
-            
             // Hook.
             CGFloat transitionPercent = (self.targetState == In) ? deltaPercent : 1.0 + deltaPercent;
             [self updateInteractiveTransition:transitionPercent];

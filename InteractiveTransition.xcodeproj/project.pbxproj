@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D848E4ED18E0975800D5BEA8 /* EPPZTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = D848E4EC18E0975800D5BEA8 /* EPPZTransition.m */; };
 		D8615C1218D314870058EEF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8615C1118D314870058EEF8 /* Foundation.framework */; };
 		D8615C1418D314870058EEF8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8615C1318D314870058EEF8 /* CoreGraphics.framework */; };
 		D8615C1618D314870058EEF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8615C1518D314870058EEF8 /* UIKit.framework */; };
@@ -16,29 +17,15 @@
 		D8615C2518D314870058EEF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8615C2318D314870058EEF8 /* Main.storyboard */; };
 		D8615C2818D314870058EEF8 /* EPPZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C2718D314870058EEF8 /* EPPZViewController.m */; };
 		D8615C2A18D314870058EEF8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8615C2918D314870058EEF8 /* Images.xcassets */; };
-		D8615C3118D314870058EEF8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8615C3018D314870058EEF8 /* XCTest.framework */; };
-		D8615C3218D314870058EEF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8615C1118D314870058EEF8 /* Foundation.framework */; };
-		D8615C3318D314870058EEF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8615C1518D314870058EEF8 /* UIKit.framework */; };
-		D8615C3B18D314870058EEF8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8615C3918D314870058EEF8 /* InfoPlist.strings */; };
-		D8615C3D18D314870058EEF8 /* InteractiveTransitionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C3C18D314870058EEF8 /* InteractiveTransitionTests.m */; };
 		D8615C4A18D317C60058EEF8 /* EPPZGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C4918D317C60058EEF8 /* EPPZGeometry.m */; };
 		D8615C4D18D317DF0058EEF8 /* EPPZRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C4C18D317DF0058EEF8 /* EPPZRandom.m */; };
-		D8615C5318D3214C0058EEF8 /* EPPZInteractor.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C5218D3214C0058EEF8 /* EPPZInteractor.m */; };
 		D8615C5618D32FA00058EEF8 /* EPPZModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */; };
 		D8615C5818D32FC50058EEF8 /* EPPZModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D8615C3418D314870058EEF8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D8615C0618D314870058EEF8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D8615C0D18D314870058EEF8;
-			remoteInfo = InteractiveTransition;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		D848E4EB18E0975800D5BEA8 /* EPPZTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZTransition.h; sourceTree = "<group>"; };
+		D848E4EC18E0975800D5BEA8 /* EPPZTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZTransition.m; sourceTree = "<group>"; };
 		D8615C0E18D314870058EEF8 /* InteractiveTransition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteractiveTransition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8615C1118D314870058EEF8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D8615C1318D314870058EEF8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,17 +40,11 @@
 		D8615C2618D314870058EEF8 /* EPPZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPPZViewController.h; sourceTree = "<group>"; };
 		D8615C2718D314870058EEF8 /* EPPZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPPZViewController.m; sourceTree = "<group>"; };
 		D8615C2918D314870058EEF8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		D8615C2F18D314870058EEF8 /* InteractiveTransitionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InteractiveTransitionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8615C3018D314870058EEF8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		D8615C3818D314870058EEF8 /* InteractiveTransitionTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InteractiveTransitionTests-Info.plist"; sourceTree = "<group>"; };
-		D8615C3A18D314870058EEF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D8615C3C18D314870058EEF8 /* InteractiveTransitionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InteractiveTransitionTests.m; sourceTree = "<group>"; };
 		D8615C4818D317C60058EEF8 /* EPPZGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZGeometry.h; sourceTree = "<group>"; };
 		D8615C4918D317C60058EEF8 /* EPPZGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZGeometry.m; sourceTree = "<group>"; };
 		D8615C4B18D317DF0058EEF8 /* EPPZRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZRandom.h; sourceTree = "<group>"; };
 		D8615C4C18D317DF0058EEF8 /* EPPZRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZRandom.m; sourceTree = "<group>"; };
-		D8615C5118D3214C0058EEF8 /* EPPZInteractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZInteractor.h; sourceTree = "<group>"; };
-		D8615C5218D3214C0058EEF8 /* EPPZInteractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZInteractor.m; sourceTree = "<group>"; };
 		D8615C5418D32FA00058EEF8 /* EPPZModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZModalViewController.h; sourceTree = "<group>"; };
 		D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZModalViewController.m; sourceTree = "<group>"; };
 		D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EPPZModalViewController.xib; sourceTree = "<group>"; };
@@ -80,24 +61,54 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D8615C2C18D314870058EEF8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D8615C3118D314870058EEF8 /* XCTest.framework in Frameworks */,
-				D8615C3318D314870058EEF8 /* UIKit.framework in Frameworks */,
-				D8615C3218D314870058EEF8 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D848E4E818E0960C00D5BEA8 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				D8615C2018D314870058EEF8 /* EPPZAppDelegate.h */,
+				D8615C2118D314870058EEF8 /* EPPZAppDelegate.m */,
+				D8615C2318D314870058EEF8 /* Main.storyboard */,
+				D848E4E918E0962400D5BEA8 /* View */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		D848E4E918E0962400D5BEA8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D848E4EE18E0975D00D5BEA8 /* Transition */,
+				D8615C2618D314870058EEF8 /* EPPZViewController.h */,
+				D8615C2718D314870058EEF8 /* EPPZViewController.m */,
+				D848E4EA18E0963900D5BEA8 /* Modal */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D848E4EA18E0963900D5BEA8 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				D8615C5418D32FA00058EEF8 /* EPPZModalViewController.h */,
+				D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */,
+				D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */,
+			);
+			name = Modal;
+			sourceTree = "<group>";
+		};
+		D848E4EE18E0975D00D5BEA8 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				D848E4EB18E0975800D5BEA8 /* EPPZTransition.h */,
+				D848E4EC18E0975800D5BEA8 /* EPPZTransition.m */,
+			);
+			name = Transition;
+			sourceTree = "<group>";
+		};
 		D8615C0518D314870058EEF8 = {
 			isa = PBXGroup;
 			children = (
 				D8615C1718D314870058EEF8 /* InteractiveTransition */,
-				D8615C3618D314870058EEF8 /* InteractiveTransitionTests */,
 				D8615C1018D314870058EEF8 /* Frameworks */,
 				D8615C0F18D314870058EEF8 /* Products */,
 			);
@@ -107,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				D8615C0E18D314870058EEF8 /* InteractiveTransition.app */,
-				D8615C2F18D314870058EEF8 /* InteractiveTransitionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,16 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				D8615C4E18D317E20058EEF8 /* eppz!kit (local) */,
-				D8615C2018D314870058EEF8 /* EPPZAppDelegate.h */,
-				D8615C2118D314870058EEF8 /* EPPZAppDelegate.m */,
-				D8615C2318D314870058EEF8 /* Main.storyboard */,
-				D8615C2618D314870058EEF8 /* EPPZViewController.h */,
-				D8615C2718D314870058EEF8 /* EPPZViewController.m */,
-				D8615C5118D3214C0058EEF8 /* EPPZInteractor.h */,
-				D8615C5218D3214C0058EEF8 /* EPPZInteractor.m */,
-				D8615C5418D32FA00058EEF8 /* EPPZModalViewController.h */,
-				D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */,
-				D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */,
+				D848E4E818E0960C00D5BEA8 /* Main */,
 				D8615C2918D314870058EEF8 /* Images.xcassets */,
 				D8615C1818D314870058EEF8 /* Supporting Files */,
 			);
@@ -150,24 +151,6 @@
 				D8615C1A18D314870058EEF8 /* InfoPlist.strings */,
 				D8615C1D18D314870058EEF8 /* main.m */,
 				D8615C1F18D314870058EEF8 /* InteractiveTransition-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D8615C3618D314870058EEF8 /* InteractiveTransitionTests */ = {
-			isa = PBXGroup;
-			children = (
-				D8615C3C18D314870058EEF8 /* InteractiveTransitionTests.m */,
-				D8615C3718D314870058EEF8 /* Supporting Files */,
-			);
-			path = InteractiveTransitionTests;
-			sourceTree = "<group>";
-		};
-		D8615C3718D314870058EEF8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D8615C3818D314870058EEF8 /* InteractiveTransitionTests-Info.plist */,
-				D8615C3918D314870058EEF8 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -219,24 +202,6 @@
 			productReference = D8615C0E18D314870058EEF8 /* InteractiveTransition.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D8615C2E18D314870058EEF8 /* InteractiveTransitionTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D8615C4318D314870058EEF8 /* Build configuration list for PBXNativeTarget "InteractiveTransitionTests" */;
-			buildPhases = (
-				D8615C2B18D314870058EEF8 /* Sources */,
-				D8615C2C18D314870058EEF8 /* Frameworks */,
-				D8615C2D18D314870058EEF8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D8615C3518D314870058EEF8 /* PBXTargetDependency */,
-			);
-			name = InteractiveTransitionTests;
-			productName = InteractiveTransitionTests;
-			productReference = D8615C2F18D314870058EEF8 /* InteractiveTransitionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -244,13 +209,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = EPPZ;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "eppz! development, LLC";
-				TargetAttributes = {
-					D8615C2E18D314870058EEF8 = {
-						TestTargetID = D8615C0D18D314870058EEF8;
-					};
-				};
 			};
 			buildConfigurationList = D8615C0918D314870058EEF8 /* Build configuration list for PBXProject "InteractiveTransition" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -266,7 +226,6 @@
 			projectRoot = "";
 			targets = (
 				D8615C0D18D314870058EEF8 /* InteractiveTransition */,
-				D8615C2E18D314870058EEF8 /* InteractiveTransitionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -283,14 +242,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D8615C2D18D314870058EEF8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D8615C3B18D314870058EEF8 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -302,29 +253,13 @@
 				D8615C1E18D314870058EEF8 /* main.m in Sources */,
 				D8615C5618D32FA00058EEF8 /* EPPZModalViewController.m in Sources */,
 				D8615C2218D314870058EEF8 /* EPPZAppDelegate.m in Sources */,
+				D848E4ED18E0975800D5BEA8 /* EPPZTransition.m in Sources */,
 				D8615C4D18D317DF0058EEF8 /* EPPZRandom.m in Sources */,
 				D8615C2818D314870058EEF8 /* EPPZViewController.m in Sources */,
-				D8615C5318D3214C0058EEF8 /* EPPZInteractor.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D8615C2B18D314870058EEF8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D8615C3D18D314870058EEF8 /* InteractiveTransitionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D8615C3518D314870058EEF8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D8615C0D18D314870058EEF8 /* InteractiveTransition */;
-			targetProxy = D8615C3418D314870058EEF8 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D8615C1A18D314870058EEF8 /* InfoPlist.strings */ = {
@@ -343,14 +278,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		D8615C3918D314870058EEF8 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D8615C3A18D314870058EEF8 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -358,7 +285,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -397,7 +323,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -452,48 +377,6 @@
 			};
 			name = Release;
 		};
-		D8615C4418D314870058EEF8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/InteractiveTransition.app/InteractiveTransition";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InteractiveTransition/InteractiveTransition-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "InteractiveTransitionTests/InteractiveTransitionTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		D8615C4518D314870058EEF8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/InteractiveTransition.app/InteractiveTransition";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InteractiveTransition/InteractiveTransition-Prefix.pch";
-				INFOPLIST_FILE = "InteractiveTransitionTests/InteractiveTransitionTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -513,14 +396,7 @@
 				D8615C4218D314870058EEF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		D8615C4318D314870058EEF8 /* Build configuration list for PBXNativeTarget "InteractiveTransitionTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D8615C4418D314870058EEF8 /* Debug */,
-				D8615C4518D314870058EEF8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

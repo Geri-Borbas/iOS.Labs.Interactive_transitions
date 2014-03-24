@@ -20,6 +20,7 @@ typedef UIViewController *(^EPPZViewControllerModalInstanceBlock)();
 @property (nonatomic, weak) IBOutlet UIProgressView *negativeProgressView;
 @property (nonatomic, weak) IBOutlet UILabel *presenterViewLabel;
 @property (nonatomic, weak) IBOutlet UILabel *modalViewLabel;
+
 -(IBAction)presentTouchedUp;
 
 @end
