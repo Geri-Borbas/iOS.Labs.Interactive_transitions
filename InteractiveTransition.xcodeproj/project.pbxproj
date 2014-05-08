@@ -21,6 +21,7 @@
 		D8615C4D18D317DF0058EEF8 /* EPPZRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C4C18D317DF0058EEF8 /* EPPZRandom.m */; };
 		D8615C5618D32FA00058EEF8 /* EPPZModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */; };
 		D8615C5818D32FC50058EEF8 /* EPPZModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */; };
+		D8EDB14A18E324BB0008417B /* EPPZLeftSwipeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EDB14918E324BB0008417B /* EPPZLeftSwipeTransition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,8 @@
 		D8615C5418D32FA00058EEF8 /* EPPZModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZModalViewController.h; sourceTree = "<group>"; };
 		D8615C5518D32FA00058EEF8 /* EPPZModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZModalViewController.m; sourceTree = "<group>"; };
 		D8615C5718D32FC50058EEF8 /* EPPZModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EPPZModalViewController.xib; sourceTree = "<group>"; };
+		D8EDB14818E324BB0008417B /* EPPZLeftSwipeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPPZLeftSwipeTransition.h; sourceTree = "<group>"; };
+		D8EDB14918E324BB0008417B /* EPPZLeftSwipeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPPZLeftSwipeTransition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 		D848E4E918E0962400D5BEA8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D8EDB14818E324BB0008417B /* EPPZLeftSwipeTransition.h */,
+				D8EDB14918E324BB0008417B /* EPPZLeftSwipeTransition.m */,
 				D848E4EE18E0975D00D5BEA8 /* Transition */,
 				D8615C2618D314870058EEF8 /* EPPZViewController.h */,
 				D8615C2718D314870058EEF8 /* EPPZViewController.m */,
@@ -254,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8615C4A18D317C60058EEF8 /* EPPZGeometry.m in Sources */,
+				D8EDB14A18E324BB0008417B /* EPPZLeftSwipeTransition.m in Sources */,
 				D8615C1E18D314870058EEF8 /* main.m in Sources */,
 				D8615C5618D32FA00058EEF8 /* EPPZModalViewController.m in Sources */,
 				D8615C2218D314870058EEF8 /* EPPZAppDelegate.m in Sources */,

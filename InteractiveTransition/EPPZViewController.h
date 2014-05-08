@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "EPPZGeometry.h"
-#import "EPPZTransition.h"
+#import "EPPZLeftSwipeTransition.h"
 
 
 @interface EPPZViewController : UIViewController

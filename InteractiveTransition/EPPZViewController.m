@@ -24,10 +24,6 @@
 @implementation EPPZViewController
 
 
--(IBAction)presentTouchedUp
-{ [self.transition present]; }
-
-
 #pragma mark - Creation
 
 -(void)viewDidLoad
@@ -35,21 +31,29 @@
     [super viewDidLoad];
     
     // Create transition.
-    self.transition = [EPPZTransition transitionForPresenterViewController:self
-                                                       modalViewController:^UIViewController*
-    { return [[EPPZModalViewController alloc] initWithNibName:@"EPPZModalViewController" bundle:nil]; }];
+    self.transition = [EPPZLeftSwipeTransition transitionForPresenterViewController:self
+                                                                modalViewController:^UIViewController*
+    { return [[EPPZModalViewController alloc] initWithNibName:@"EPPZModalViewController"
+                                                       bundle:nil]; }];
     
     // Debug.
-    self.viewNamesForViewTags = @{
-                                  @(0) : @"None",
-                                  @(1) : @"Presenter",
-                                  @(2) : @"Modal",
-                                  };
-    self.transition.delegate = self;
+    [self setupDebug];
 }
 
 
+#pragma mark - Interactions
+
+-(IBAction)presentTouchedUp
+{ [self.transition present]; }
+
+
 #pragma mark - Debug
+
+-(void)setupDebug
+{
+    self.viewNamesForViewTags = @{ @(0) : @"None", @(1) : @"Presenter", @(2) : @"Modal" };
+    self.transition.delegate = self;
+}
 
 -(void)interactiveTransitionDidChage:(EPPZTransition*) transition
 {

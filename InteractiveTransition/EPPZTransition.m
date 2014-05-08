@@ -31,12 +31,14 @@
      -[NSObject animateTransition:] // This method can only be a nop if the transition is interactive and not a percentDriven interactive transition.
      */
 
-    UIViewControllerInteractiveTransitioning
+    UIViewControllerInteractiveTransitioning,
     /*
      -[NSObject startInteractiveTransition:]
      -[NSObject completionSpeed]
      -[NSObject completionCurve]
      */
+
+    UIGestureRecognizerDelegate
 
     >
 
@@ -60,6 +62,7 @@
     id <EPPZTransitionDebugDelegate> _delegate;
 }
 
+@property (nonatomic, strong) UIGestureRecognizer *recognizer;
 @property (nonatomic, weak) UIViewController *presenterViewController;
 @property (nonatomic, strong) EPPZTransitionModalViewControllerInstanceBlock modalViewControllerInstanceBlock;
 
@@ -67,7 +70,7 @@
 @end
 
 
-@implementation EPPZTransition (Protected)
+@implementation EPPZTransition (Protected_accessors)
 
 -(BOOL)isInteractive { return _interactive; }
 -(void)setInteractive:(BOOL) interactive { _interactive = interactive; }
@@ -125,7 +128,7 @@
     instance.presenterViewController = presenterViewController;
     instance.modalViewControllerInstanceBlock = modalViewControllerInstanceBlock;
     [instance setup];
-    [instance addGestureRecognizers];
+    [instance addGestureRecognizerToPresenterView];
     return instance;
 }
 
@@ -167,47 +170,50 @@
 #pragma mark - Layout templates (override is required)
 
 -(void)layoutStart
-{ LOG_METHOD;
-    
-    // Presenting view (as is).
-    self.presenterView.transform = CGAffineTransformIdentity;
-    
-    // Modal view (left out).
-    self.modalView.transform = CGAffineTransformMakeTranslation(-self.modalView.bounds.size.width, 0.0);
-}
+{ /* Template */ }
 
 -(void)layoutEnd
-{ LOG_METHOD;
-    
-    // Presenting view (as is).
-    self.presenterView.transform = CGAffineTransformIdentity;
-    
-    // Modal view (in).
-    self.modalView.transform = CGAffineTransformMakeTranslation(0.0, 0.0);
-}
+{ /* Template */ }
 
 -(void)layoutInteractive:(CGFloat) percent
-{
-    ETRLog(@"EPPZTransition layoutInteractive: (%.2f) containerView:presentingView:modalView:", percent);
-    
-    // Modal view (0.0 is left out, 1.0 is in).
-    self.modalView.transform = CGAffineTransformMakeTranslation(-self.modalView.bounds.size.width * (1.0 - percent), 0.0);
-}
-
-
+{ /* Template */ }
 
 
 #pragma mark - Gestures
 
--(void)addGestureRecognizers
+-(UIGestureRecognizer*)gestureRecognizer
 {
     // Create pan recognizer.
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     panGestureRecognizer.minimumNumberOfTouches = 1;
-    
-    // Add to view.
-    [self.presenterViewController.view addGestureRecognizer:panGestureRecognizer];
+    panGestureRecognizer.delegate = self;
+
+    return panGestureRecognizer;
 }
+
+-(UIGestureRecognizer*)recognizer
+{
+    if (_recognizer == nil)
+    { _recognizer = [self gestureRecognizer]; }
+    return _recognizer;
+}
+
+-(void)addGestureRecognizerToPresenterView
+{
+    [self.presenterViewController.view removeGestureRecognizer:self.recognizer];
+    [self.modalView.superview removeGestureRecognizer:self.recognizer];
+    [self.presenterViewController.view addGestureRecognizer:self.recognizer]; // Add
+}
+
+-(void)addGestureRecognizerToModalView
+{
+    [self.presenterViewController.view removeGestureRecognizer:self.recognizer];
+    [self.modalView.superview removeGestureRecognizer:self.recognizer];
+    [self.modalView.superview addGestureRecognizer:self.recognizer]; // Add
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{ return YES; }
 
 -(void)handlePan:(UIPanGestureRecognizer*) panGesture
 {
@@ -354,7 +360,7 @@
         ETRLog(@"EPPZTransition presenting");
         
         [self setupPresentation];
-        [self animateEnd];
+        [self animateToEnd];
     }
     
     // Dismissal.
@@ -363,13 +369,24 @@
         ETRLog(@"EPPZTransition dismissal");
         
         [self setupDismissal];
-        [self animateStart];
+        [self animateToStart];
     }
 }
 
--(void)animateEnd
+-(CGFloat)remainingDuration
 {
-    [UIView animateWithDuration:self.duration
+    NSLog(@"%.2f", self.duration);
+    return self.duration;
+    
+    #warning Scale delta percent upon stuff.
+    CGFloat remainingPercent = 1.0 - fabsf(self.deltaPercent);
+    CGFloat remainingDuration = (remainingPercent > 0.0) ? self.duration * remainingPercent : self.duration;
+    return remainingDuration;
+}
+
+-(void)animateToEnd
+{
+    [UIView animateWithDuration:self.remainingDuration
                           delay:0.0
          usingSpringWithDamping:self.damping
           initialSpringVelocity:self.initialSpringVelocity
@@ -377,14 +394,15 @@
                      animations:^{ [self layoutEnd]; }
                      completion:^(BOOL finished)
      {
+         [self addGestureRecognizerToModalView];
          [self reset];
          [self.transitionContext completeTransition:!self.canceled];
      }];
 }
 
--(void)animateStart
+-(void)animateToStart
 {
-    [UIView animateWithDuration:self.duration
+    [UIView animateWithDuration:self.remainingDuration
                           delay:0.0
          usingSpringWithDamping:self.damping
           initialSpringVelocity:self.initialSpringVelocity
@@ -392,6 +410,7 @@
                      animations:^{ [self layoutStart]; }
                      completion:^(BOOL finished)
      {
+         [self addGestureRecognizerToPresenterView];
          [self reset];
          [self.transitionContext completeTransition:!self.canceled];
      }];

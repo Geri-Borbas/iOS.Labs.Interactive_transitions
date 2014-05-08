@@ -18,6 +18,7 @@ typedef enum
 
 @interface EPPZTransition (Protected)
 
+
 #pragma mark - States
 
 @property (nonatomic, getter=isInteractive) BOOL interactive;
@@ -38,5 +39,17 @@ typedef enum
 @property (nonatomic) CGFloat duration;
 @property (nonatomic) CGFloat damping;
 @property (nonatomic) CGFloat initialSpringVelocity;
+
+
+#pragma mark - Methods needs to be implemented in subclass
+
+-(void)setup;
+-(void)layoutStart;
+-(void)layoutEnd;
+
+-(UIGestureRecognizer*)gestureRecognizer;
+-(void)layoutInteractive:(CGFloat) percent;
+
+
 
 @end
